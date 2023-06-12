@@ -26,6 +26,7 @@ import torch.optim as optim
 import random
 import time
 
+from DDQNKing import DDQNAgent as DDQNKing
 
 class NETWORK(torch.nn.Module):
 	def __init__(self, input_dim: int, output_dim: int, hidden_dim: int) -> None:
@@ -418,24 +419,32 @@ def train():
 		# 4: 'idle',
 		# 5: 'space',
 	}
-	agent = DDQN()
+	agent = DDQNKing()
 	env = JKGame(max_step=1000)
 	num_episode = 100000
 
+	eps = eps_start = 0.1
+	eps_end = 0.001
+	eps_decay = 0.99
+
 	for i in range(num_episode):
+		
 		done, state = env.reset()
-
 		running_reward = 0
-		while not done:
-			action = agent.select_action(state)
-			#print(action_dict[action])
-			next_state, reward, done = env.step(action)
 
+		eps = max(eps_end, eps_decay * eps)
+
+		while not done: # empieza episodio
+			
+			action = agent.act(np.array(state), eps)
+			#print(action)
+			next_state, reward, done = env.step(action)
+			agent.step(state, action, reward, next_state, done)
 			running_reward += reward
-			sign = 1 if done else 0
-			agent.train(state, action, reward, next_state, sign)
 			state = next_state
-		print (f'episode: {i}, reward: {running_reward}')
+
+			#sign = 1 if done else 0
+		print (f'episode: {i}, reward: {running_reward}, eps = {eps}')
 
 			
 if __name__ == "__main__":
