@@ -424,7 +424,7 @@ def train():
 	num_episode = 100000
 
 	eps = eps_start = 0.1
-	eps_end = 0.001
+	eps_end = 0.0001
 	eps_decay = 0.99
 
 	for i in range(num_episode):
