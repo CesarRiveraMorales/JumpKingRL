@@ -3,6 +3,8 @@
 # Game Screen
 # 
 
+import time
+
 import pygame 
 import sys
 import os
@@ -421,14 +423,19 @@ def train():
 	}
 	agent = DDQNKing()
 	env = JKGame(max_step=1000)
-	num_episode = 100000
+	num_episode = 2000
 
+<<<<<<< Updated upstream
 	eps = eps_start = 0.1
+=======
+	eps = eps_start = 0.8
+>>>>>>> Stashed changes
 	eps_end = 0.0001
 	eps_decay = 0.99
-
+	
+	archivo = open("reward-e1.txt", "w")
 	for i in range(num_episode):
-		
+		start_time = time.time()
 		done, state = env.reset()
 		running_reward = 0
 
@@ -436,7 +443,7 @@ def train():
 
 		while not done: # empieza episodio
 			
-			action = agent.act(np.array(state), eps)
+			action = agent.act(np.array(state).any, eps)
 			#print(action)
 			next_state, reward, done = env.step(action)
 			agent.step(state, action, reward, next_state, done)
@@ -444,8 +451,10 @@ def train():
 			state = next_state
 
 			#sign = 1 if done else 0
-		print (f'episode: {i}, reward: {running_reward}, eps = {eps}')
-
+		elapsed_time = time.time() - start_time
+		print (f'episode: {i}, reward: {running_reward}, eps = {eps}, time = {elapsed_time}')
+		archivo.writelines(f' {i} {running_reward} {eps} {elapsed_time}')
+	archivo.close()
 			
 if __name__ == "__main__":
 	#Game = JKGame()
