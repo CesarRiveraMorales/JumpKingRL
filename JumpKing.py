@@ -188,7 +188,7 @@ class JKGame:
 
 		pygame.display.set_caption('Jump King At Home XD')
 
-	def reset(self):
+	def reset(self, episode):
 		self.king.reset()
 		self.levels.reset()
 		os.environ["start"] = "1"
@@ -199,6 +199,10 @@ class JKGame:
 		os.environ["session"] = "0"
 
 		self.step_counter = 0
+		
+		if episode%500 == 0:
+			self.max_step += 50 
+
 		done = False
 		state = [self.king.levels.current_level, self.king.x, self.king.y, self.king.jumpCount]
 
@@ -420,8 +424,9 @@ def train():
 		# 5: 'space',
 	}
 	agent = DDQNKing()
+	#env = JKGame(max_step=1000)
 	env = JKGame(max_step=1000)
-	num_episode = 100000
+	num_episode = 10000
 
 	eps = eps_start = 0.1
 	eps_end = 0.0001
@@ -429,7 +434,7 @@ def train():
 
 	for i in range(num_episode):
 		
-		done, state = env.reset()
+		done, state = env.reset(i)
 		running_reward = 0
 
 		eps = max(eps_end, eps_decay * eps)
@@ -444,7 +449,7 @@ def train():
 			state = next_state
 
 			#sign = 1 if done else 0
-		print (f'episode: {i}, reward: {running_reward}, eps = {eps}')
+		print (f'episode: {i}, reward: {running_reward}')
 
 			
 if __name__ == "__main__":

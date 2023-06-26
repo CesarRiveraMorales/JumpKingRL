@@ -22,7 +22,7 @@ class Environment:
 		os.environ["active"] = ""
 		os.environ["gaming"] = ""
 		os.environ["pause"] = "1"
-		os.environ["volume"] = ""
+		os.environ["volume"] = "0"
 		os.environ["music"] = ""
 		os.environ["ambience"] = "1"
 		os.environ["sfx"] = "1"
