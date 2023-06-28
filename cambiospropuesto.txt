@@ -1,0 +1,33 @@
+cambiamos el decay de epsilon, y la red que utilizamos ahora tiene como capas ocultas más cantidad de neuronas (de 32 a 64)
+ https://dilithjay.com/blog/double-deep-q-networks-ddqn-a-quick-intro-with-code/
+
+
+ pruebas 1: 
+
+ 	eps = eps_start = 1
+	eps_end = 0.0001
+	eps_decay = 0.99
+
+ pruebas 2: 
+
+ 	eps = eps_start = 0.1
+	eps_end = 0.0001
+	eps_decay = 0.99
+
+ pruebas 3: 
+
+ 	eps = eps_start = 0.01
+	eps_end = 0.0001
+	eps_decay = 0.99
+
+ pruebas 4: 
+
+ 	eps = eps_start = 0.5
+	eps_end = 0.0001
+	eps_decay = 0.99
+
+ pruebas 5: 
+
+ 	eps = eps_start = 0.8
+	eps_end = 0.0001
+	eps_decay = 0.99
