@@ -17,9 +17,8 @@ class Rectangles:
 		self.levels[0]	=	[(352, 185, 128, 175, 0, 0, False, False),
 							(185, 40, 110, 50, 0, 0, False, False),
 							(128, 330, 224, 30, 0, 0, False, False),
-							(8, 184, 120, 107, 0, 0, False, False),
-							(8, 291, 65, 69, 0, 0, False, False),
-							(73, 330, 55, 30, 0, 0, False, False),
+							(8, 184, 120, 360, 0, 0, False, False),		# (8, 291, 65, 69, 0, 0, False, False),(73, 330, 55, 30, 0, 0, False, False),
+							
 							(0, 0, 8, 360, 0, 0, False, False),
 							(472, 0, 8, 360, 0, 0, False, False)]
 

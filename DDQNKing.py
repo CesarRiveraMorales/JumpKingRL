@@ -59,7 +59,7 @@ class ReplayBuffer:
 # Define the Double DQN agent
 class DDQNAgent:
     def __init__(self, state_size = 4, action_size = 4, seed = 1, learning_rate=1e-3, capacity=1000000,
-                 discount_factor=0.99, tau=1e-3, update_every=1, batch_size=64):
+                 discount_factor=0.99, tau=1e-3, update_every=5, batch_size=64):
         self.state_size = state_size
         self.action_size = action_size
         self.seed = seed

@@ -29,6 +29,7 @@ import random
 import time
 
 from DDQNKing import DDQNAgent as DDQNKing
+from RainbowKing import DQNAgent as RAINBOWKing
 
 class NETWORK(torch.nn.Module):
 	def __init__(self, input_dim: int, output_dim: int, hidden_dim: int) -> None:
@@ -190,7 +191,7 @@ class JKGame:
 
 		pygame.display.set_caption('Jump King At Home XD')
 
-	def reset(self, episode):
+	def reset(self):
 		self.king.reset()
 		self.levels.reset()
 		os.environ["start"] = "1"
@@ -201,9 +202,6 @@ class JKGame:
 		os.environ["session"] = "0"
 
 		self.step_counter = 0
-		
-		if episode%500 == 0:
-			self.max_step += 50 
 
 		done = False
 		state = [self.king.levels.current_level, self.king.x, self.king.y, self.king.jumpCount]
@@ -428,37 +426,35 @@ def train():
 	agent = DDQNKing()
 	#env = JKGame(max_step=1000)
 	env = JKGame(max_step=1000)
-	num_episode = 10000
+	num_episode = 2000
 
-<<<<<<< Updated upstream
 	eps = eps_start = 0.1
-=======
-	eps = eps_start = 0.8
->>>>>>> Stashed changes
 	eps_end = 0.0001
 	eps_decay = 0.99
 	
-	archivo = open("reward-e1.txt", "w")
+	archivo = open("reward-final.txt", "w")
+
 	for i in range(num_episode):
-		
-		done, state = env.reset(i)
+		done, state = env.reset()
 		running_reward = 0
 
 		eps = max(eps_end, eps_decay * eps)
 
 		while not done: # empieza episodio
 			
-			action = agent.act(np.array(state).any, eps)
+			action = agent.act(np.array(state), eps)
+			#action = agent.select_action(state)
 			#print(action)
 			next_state, reward, done = env.step(action)
 			agent.step(state, action, reward, next_state, done)
+			#agent.step(state, reward, next_state, done, action)
 			running_reward += reward
 			state = next_state
 
 			#sign = 1 if done else 0
-		print (f'episode: {i}, reward: {running_reward}')
-
-			
+		print (f'episode: {i}, reward: {running_reward}, eps = {eps}')
+		archivo.writelines(f'{i} {running_reward} {eps}\n')	
+	archivo.close()
 if __name__ == "__main__":
 	#Game = JKGame()
 	#Game.running()
